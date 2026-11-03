@@ -1,0 +1,72 @@
+# Install as .github/workflows/pages.yml in mettabit-io/irving-updates.
+# This public workflow must never check out the private Irving source repository.
+name: Publish Sparkle feed
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# The private Apple release lane cannot serialize this repository's deployments.
+# Hold this lane through deployment completion; never cancel an active deploy.
+concurrency:
+  group: sparkle-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the public feed revision
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Skip superseded queued revisions
+        id: current
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          head=$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/main" --jq '.object.sha')
+          if [[ "${head}" == "${GITHUB_SHA}" ]]; then
+            echo 'publish=true' >> "${GITHUB_OUTPUT}"
+          else
+            echo 'publish=false' >> "${GITHUB_OUTPUT}"
+            echo "Skipping superseded feed revision ${GITHUB_SHA}."
+          fi
+      - name: Prepare only the public appcast
+        if: steps.current.outputs.publish == 'true'
+        run: |
+          set -euo pipefail
+          test -f appcast.xml && test ! -L appcast.xml
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          data = Path('appcast.xml').read_bytes()
+          if len(data) > 1_048_576 or b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():
+              raise ValueError('Appcast must be bounded XML without declarations')
+          root = ET.fromstring(data)
+          if root.tag != 'rss' or root.find('channel') is None:
+              raise ValueError('Appcast must contain an RSS channel')
+          PY
+          mkdir .pages-site
+          install -m 0644 appcast.xml .pages-site/appcast.xml
+      - name: Upload the feed artifact
+        if: steps.current.outputs.publish == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .pages-site
+      - name: Deploy the feed
+        if: steps.current.outputs.publish == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
