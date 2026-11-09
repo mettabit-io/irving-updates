@@ -4,12 +4,12 @@
         <title>Irving</title>
         <item>
             <title>0.2.133</title>
-            <pubDate>Mon, 09 Nov 2026 12:01:56 -0800</pubDate>
+            <pubDate>Mon, 09 Nov 2026 12:11:34 -0800</pubDate>
             <ns0:version>20261109195839</ns0:version>
             <ns0:shortVersionString>0.2.133</ns0:shortVersionString>
             <ns0:minimumSystemVersion>26.2</ns0:minimumSystemVersion>
             <ns0:hardwareRequirements>arm64</ns0:hardwareRequirements>
-            <enclosure url="https://github.com/mettabit-io/irving-updates/releases/download/v0.2.133/Irving-0.2.133-fe2e0312d62d1ede03823c61e6c5cf54a0ace5bdb3becfdab85108fdf425ffe6.zip" length="29473510" type="application/octet-stream" ns0:edSignature="DBJn2ztym/OXh1PXpSfUJdHMRwqPfnXxTbmniu7Eoq5H3BSsg9DOzI+L53k7/b6O2abfYiuLD5DmWXxflZ4+Cw==" />
+            <enclosure url="https://github.com/mettabit-io/irving-updates/releases/download/v0.2.133/Irving-0.2.133-51d3975eb6c1a95162411f6733f2df4f281bea0f380512f72f179ce65b5178a4.zip" length="29473515" type="application/octet-stream" ns0:edSignature="Zrj3tnD8uUh8Al3Zd424HiTORgfoYcTWvWb49cVEDdLIAKKGrrofRFiWcnxjN7L0EJZKUhlAtZyjlzxUFSS1DA==" />
         <ns1:sourceSHA>1a9186a8fd5d43421b750627f14817c2150b3226</ns1:sourceSHA></item>
     </channel>
 </rss>
