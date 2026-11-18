@@ -3,13 +3,13 @@
     <channel>
         <title>Irving</title>
         <item>
-            <title>0.2.183</title>
-            <pubDate>Wed, 18 Nov 2026 02:03:27 -0800</pubDate>
-            <ns0:version>20261118095449</ns0:version>
-            <ns0:shortVersionString>0.2.183</ns0:shortVersionString>
+            <title>0.2.184</title>
+            <pubDate>Wed, 18 Nov 2026 09:32:36 -0800</pubDate>
+            <ns0:version>20261118172258</ns0:version>
+            <ns0:shortVersionString>0.2.184</ns0:shortVersionString>
             <ns0:minimumSystemVersion>26.2</ns0:minimumSystemVersion>
             <ns0:hardwareRequirements>arm64</ns0:hardwareRequirements>
-            <enclosure url="https://github.com/mettabit-io/irving-updates/releases/download/v0.2.183/Irving-0.2.183-7eca2cea9cc50b8240d1207dad58c329b7360d9ae721048dcedb9bc8d580a7b6.zip" length="29861156" type="application/octet-stream" ns0:edSignature="w1sSHwS2iF5kEqTltKMLA09PxtBDph6/THGUlJdicXdZfFUlfLFX3jZ91tQBHe1uiMZdOaWbgucLfNJLfLVEBQ==" />
-        <ns1:sourceSHA>0048ff7a1bd2ebde01de44062a76fcfa1c1541b0</ns1:sourceSHA></item>
+            <enclosure url="https://github.com/mettabit-io/irving-updates/releases/download/v0.2.184/Irving-0.2.184-f1791f577dcb6bc5426246054dfaa0f808ec95a556985ab58f434b0f5d0a9563.zip" length="29876852" type="application/octet-stream" ns0:edSignature="oFOz/rlhP7TFdbw1KGRFPa6a6ing5MIwUNh+lZPi/loy2xcLtvNP3G1SGMsZpyVU3hWxV31LPurgTGIHya6sBw==" />
+        <ns1:sourceSHA>2e23a1d0b4299d2bb579986145871ef41021c530</ns1:sourceSHA></item>
     </channel>
 </rss>
