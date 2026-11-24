@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -66,6 +67,27 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: .pages-site
+      - name: Wait until the feed artifact is listed
+        if: steps.current.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # deploy-pages looks the artifact up once, right after the upload. GitHub's
+        # artifact list can lag a finalized upload, and the deploy then fails with
+        # "Found 0 artifact(s)" (IRV-710). Wait until the same lookup sees it.
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 30); do
+            count=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?name=github-pages" --jq '.total_count')
+            if (( count > 0 )); then
+              echo "Feed artifact listed after ${attempt} lookup(s)."
+              exit 0
+            fi
+            if (( attempt < 30 )); then
+              sleep 2
+            fi
+          done
+          echo '::error::The github-pages artifact was uploaded but never appeared in this run'"'"'s artifact list.'
+          exit 1
       - name: Deploy the feed
         if: steps.current.outputs.publish == 'true'
         id: deployment
